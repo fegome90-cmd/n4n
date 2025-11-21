@@ -11,7 +11,8 @@ async function runSeed() {
   );
 }
 
-if (require.main === module) {
+// ESM-compatible main-guard pattern
+if (import.meta.url === `file://${process.argv[1]}`) {
   runSeed().catch(error => {
     console.error("Seed de ejemplo falló:", error);
     process.exit(1);

@@ -38,7 +38,7 @@ else
 fi
 
 # Security audit
-if npm audit --audit-level=moderate >/dev/null 2>&1; then
+if pnpm audit --audit-level=moderate >/dev/null 2>&1; then
   SCORE=$((SCORE + 10))
   echo "✅ Security audit passed: +10 (Score: $SCORE/$TOTAL_WEIGHT)"
 else
@@ -65,7 +65,7 @@ else
 fi
 
 # Test runs
-if npm test -- --passWithNoTests >/dev/null 2>&1; then
+if pnpm test -- --passWithNoTests >/dev/null 2>&1; then
   SCORE=$((SCORE + 7))
   echo "✅ All tests pass: +7 (Score: $SCORE/$TOTAL_WEIGHT)"
 else

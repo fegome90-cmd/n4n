@@ -101,10 +101,17 @@ async function migrateUp(client: Client): Promise<void> {
     }
 
     console.log(`[migrate] Ejecutando ${file}`);
-    await client.query(up);
-    await client.query(`INSERT INTO ${HISTORY_TABLE} (name) VALUES ($1)`, [
-      file,
-    ]);
+    await client.query("BEGIN");
+    try {
+      await client.query(up);
+      await client.query(`INSERT INTO ${HISTORY_TABLE} (name) VALUES ($1)`, [
+        file,
+      ]);
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    }
   }
 
   console.log("[migrate] Migraciones al día.");
@@ -131,8 +138,15 @@ async function migrateDown(client: Client): Promise<void> {
   }
 
   console.log(`[migrate] Revirtiendo ${file}`);
-  await client.query(down);
-  await client.query(`DELETE FROM ${HISTORY_TABLE} WHERE name = $1`, [file]);
+  await client.query("BEGIN");
+  try {
+    await client.query(down);
+    await client.query(`DELETE FROM ${HISTORY_TABLE} WHERE name = $1`, [file]);
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  }
 }
 
 function toSlug(name: string): string {
