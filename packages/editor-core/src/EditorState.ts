@@ -1,4 +1,4 @@
-import { EditorMode } from './EditorMode';
+import { EditorMode } from "./EditorMode";
 
 /**
  * Editor State - Domain Interface
@@ -23,13 +23,13 @@ export interface EditorState {
  * Create a new EditorState with default values
  */
 export function createEditorState(
-  doc: string = '',
+  doc: string = "",
   mode: EditorMode = EditorMode.INSERT
 ): EditorState {
   return {
     mode,
     doc,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   };
 }
 
@@ -44,7 +44,7 @@ export function withDocument(state: EditorState, doc: string): EditorState {
   return {
     ...state,
     doc,
-    timestamp
+    timestamp,
   };
 }
 
@@ -59,7 +59,7 @@ export function withMode(state: EditorState, mode: EditorMode): EditorState {
   return {
     ...state,
     mode,
-    timestamp
+    timestamp,
   };
 }
 
@@ -67,15 +67,15 @@ export function withMode(state: EditorState, mode: EditorMode): EditorState {
  * Type guard to check if a value is a valid EditorState
  */
 export function isEditorState(value: unknown): value is EditorState {
-  if (!value || typeof value !== 'object') return false;
+  if (!value || typeof value !== "object") return false;
 
   const state = value as any;
 
   // Check required properties exist and have correct types
   return (
-    typeof state.mode === 'string' &&
+    typeof state.mode === "string" &&
     Object.values(EditorMode).includes(state.mode) &&
-    typeof state.doc === 'string' &&
-    (state.timestamp === undefined || typeof state.timestamp === 'number')
+    typeof state.doc === "string" &&
+    (state.timestamp === undefined || typeof state.timestamp === "number")
   );
 }

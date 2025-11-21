@@ -9,10 +9,10 @@
  */
 export enum EditorMode {
   /** Insert text into document */
-  INSERT = 'INSERT',
+  INSERT = "INSERT",
 
   /** Execute commands and navigation */
-  COMMAND = 'COMMAND'
+  COMMAND = "COMMAND",
 }
 
 /**
