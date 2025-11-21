@@ -1,0 +1,8 @@
+node_modules
+dist
+.pnpm-store
+.turbo
+coverage
+*.log
+.env
+.env.*.local
