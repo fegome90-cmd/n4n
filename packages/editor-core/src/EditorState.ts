@@ -88,7 +88,7 @@ export function withMode(state: EditorState, mode: EditorMode): EditorState {
 export function isEditorState(value: unknown): value is EditorState {
   if (!value || typeof value !== "object") return false;
 
-  const state = value as any;
+  const state = value as Record<string, unknown>;
 
   // Check required properties exist and have correct types
   return (
