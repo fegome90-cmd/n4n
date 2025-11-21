@@ -1,6 +1,7 @@
 /**
- * Ejecutor de seeds de ejemplo para mantener `npm run seed:dev` funcional.
- * Reemplaza el contenido con tu lógica de carga de datos iniciales.
+ * Stub seed runner intended to be replaced with project-specific initial data loading.
+ *
+ * Replace this function's body with calls to ORMs, HTTP clients, or fixtures to populate development data for local or CI environments.
  */
 async function runSeed() {
   console.log(

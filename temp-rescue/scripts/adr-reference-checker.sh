@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 ADR_DIR="dev-docs/ADR"
 
-# Function to display help
+# help displays usage information, available commands, and examples for the ADR Reference Checker script.
 help() {
     echo -e "${BLUE}ADR Reference Checker - Kit Fundador v2.0${NC}"
     echo ""
@@ -32,7 +32,7 @@ help() {
     echo "  $0 current-task"
 }
 
-# Function to search ADRs by keyword
+# check_keyword searches ADR markdown files in $ADR_DIR for the given keyword and prints matching filenames with context; exits with code 1 if no keyword is provided.
 check_keyword() {
     local keyword="$1"
     if [ -z "$keyword" ]; then
@@ -68,7 +68,7 @@ check_keyword() {
     fi
 }
 
-# Function to suggest ADRs for common tasks
+# suggest prints ADR suggestions for the specified task, showing commands to search existing ADRs and listing common ADR topics relevant to that task.
 suggest() {
     local task="$1"
     echo -e "${GREEN}ADR Suggestions for task: '$task'${NC}"
@@ -134,7 +134,8 @@ suggest() {
     esac
 }
 
-# Function to list all ADRs
+# list_adrs lists all ADR markdown files in ADR_DIR, prints each ADR's filename, a human-friendly title and a one-line snippet from the "Context" section (if present), and then shows the total count.
+# If the ADR directory does not exist the function prints an error and exits with status 1.
 list_adrs() {
     echo -e "${GREEN}Available Architecture Decision Records:${NC}"
     echo ""
@@ -168,7 +169,13 @@ list_adrs() {
     fi
 }
 
-# Function to check ADRs for current task
+# current_task checks the repository state and suggests relevant ADR actions based on recent changes.
+# 
+# It prints a brief git status (when in a git repo) and analyzes changed files to recommend ADR-related commands:
+# - suggests checking ADR requirements when package.json changed
+# - suggests searching ADR decision matrix for Docker-related changes
+# - suggests searching ADRs for API-related changes (routes/api/controllers)
+# If not in a git repository, it prints manual ADR check suggestions.
 current_task() {
     echo -e "${GREEN}Checking ADRs for current task...${NC}"
     echo ""

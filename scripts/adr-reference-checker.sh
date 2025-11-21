@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 ADR_DIR="dev-docs/ADR"
 
-# Function to display help
+# help displays usage information, available commands with brief descriptions, and examples for the ADR Reference Checker.
 help() {
     echo -e "${BLUE}ADR Reference Checker - Kit Fundador v2.0${NC}"
     echo ""
@@ -32,7 +32,8 @@ help() {
     echo "  $0 current-task"
 }
 
-# Function to search ADRs by keyword
+# check_keyword searches ADR files in ADR_DIR for a given keyword and prints matching filenames with line-numbered context.
+# If no keyword is provided it prints usage and exits; if no matches are found it prints suggestions to run adr-helper.sh check-required or create.
 check_keyword() {
     local keyword="$1"
     if [ -z "$keyword" ]; then
@@ -68,7 +69,7 @@ check_keyword() {
     fi
 }
 
-# Function to suggest ADRs for common tasks
+# suggest prints ADR suggestions for a given task keyword, showing shell commands to search existing ADRs and listing common ADR topics relevant to the task.
 suggest() {
     local task="$1"
     echo -e "${GREEN}ADR Suggestions for task: '$task'${NC}"
@@ -134,7 +135,7 @@ suggest() {
     esac
 }
 
-# Function to list all ADRs
+# list_adrs lists available Architecture Decision Records in $ADR_DIR, printing each ADR filename, a derived human-readable Title, an excerpt of the first "## Context" line when present, and then a total count or a suggestion to create an ADR if none are found.
 list_adrs() {
     echo -e "${GREEN}Available Architecture Decision Records:${NC}"
     echo ""
@@ -168,7 +169,7 @@ list_adrs() {
     fi
 }
 
-# Function to check ADRs for current task
+# current_task checks the working tree for relevant changes and suggests ADR actions based on git status (e.g., package.json, Dockerfile/docker, API files) or provides manual guidance when not in a git repository.
 current_task() {
     echo -e "${GREEN}Checking ADRs for current task...${NC}"
     echo ""
