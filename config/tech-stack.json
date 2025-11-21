@@ -1,0 +1,140 @@
+{
+  "projectName": "n4n-engine",
+  "description": "Motor keyboard-first de Neovim for Nurses (N4N): editor, modos, comandos, providers y storage local. Sin lógica clínica ni IA acoplada.",
+  "language": "TypeScript",
+  "runtime": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": {
+    "name": "pnpm",
+    "version": ">=9.0.0"
+  },
+  "architecture": {
+    "style": "monorepo",
+    "buildSystem": "Turbo 2.x",
+    "bundler": "Vite 6.x",
+    "apps": [
+      "apps/n4n-web"
+    ],
+    "packages": [
+      "packages/editor-core",
+      "packages/n4n-engine"
+    ],
+    "notes": [
+      "v1 minimiza el número de packages para reducir complejidad.",
+      "Paquetes como ui/types/config/schema se podrán añadir en v2+ cuando el motor esté estable."
+    ]
+  },
+  "frontend": {
+    "framework": {
+      "name": "React",
+      "version": "18.x (estable)",
+      "renderer": "react-dom 18.x"
+    },
+    "typescript": "5.6.x",
+    "ui": {
+      "cssFramework": "TailwindCSS 3.4.x",
+      "designSystem": "Radix UI (opcional en v1)",
+      "components": [],
+      "utilities": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "icons": "lucide-react"
+    },
+    "state": {
+      "manager": "Zustand",
+      "version": "4.x o 5.x",
+      "pattern": "Flux-like state management",
+      "scope": "Gestión de estado de UI y preferencias, no lógica clínica."
+    }
+  },
+  "engine": {
+    "editor": {
+      "core": "CodeMirror 6",
+      "integrationPackage": "packages/editor-core",
+      "modes": [
+        "INSERT",
+        "COMMAND"
+      ]
+    },
+    "commands": {
+      "palette": "cmdk",
+      "registryPackage": "packages/n4n-engine",
+      "notes": [
+        "CommandSystem expone Command y CommandContext.",
+        "CommandContext no incluye conceptos clínicos (paciente, sistema, diagnóstico)."
+      ]
+    },
+    "providers": {
+      "snippetProvider": {
+        "type": "interface",
+        "package": "packages/n4n-engine",
+        "domainAgnostic": true
+      },
+      "completionProvider": {
+        "type": "interface",
+        "package": "packages/n4n-engine",
+        "role": "autocompletado de cohesión en texto general (ES) en fases futuras",
+        "clinicalAwareness": "none"
+      }
+    },
+    "storage": {
+      "localFirst": true,
+      "drafts": {
+        "type": "NoteDraft",
+        "backend": "IndexedDB (futuro)",
+        "v1Implementation": "in-memory stub para desarrollo"
+      }
+    }
+  },
+  "ai": {
+    "enabled": false,
+    "supportsCompletionProvider": true,
+    "providers": [],
+    "role": "Fuera del motor. El motor solo define CompletionProvider como interfaz.",
+    "notes": [
+      "El motor N4N NO referencia SDKs concretos de IA.",
+      "Cualquier integración con modelos (mini-LLM para conectores ES) vivirá en otro servicio/repositorio.",
+      "Prohibido usar IA en el motor para diagnósticos, dosis o contenido clínico."
+    ]
+  },
+  "testing": {
+    "framework": "Vitest 2.x o 3.x",
+    "runner": "Turbo test",
+    "coverageTarget": ">=80%",
+    "scope": [
+      "editor-core: modos, cambios de estado, integración básica de editor",
+      "n4n-engine: registro/ejecución de comandos, providers stub, storage in-memory"
+    ]
+  },
+  "quality": {
+    "linter": "ESLint 8.x",
+    "linterPlugins": [
+      "@typescript-eslint/eslint-plugin",
+      "eslint-plugin-react-hooks"
+    ],
+    "formatter": "Prettier 3.x",
+    "additionalLinter": "Oxlint (opcional)",
+    "gitHooks": {
+      "tool": "Husky",
+      "preCommit": "lint-staged"
+    },
+    "rules": [
+      "Prohibido importar librerías clínicas en packages/editor-core y packages/n4n-engine.",
+      "Prohibido referenciar SDKs de IA concretos en el motor.",
+      "Commits atómicos: si el mensaje necesita 'y', dividir en dos."
+    ]
+  },
+  "ciCd": {
+    "githubActions": {
+      "checkout": "actions/checkout@v4 o v5",
+      "pnpmSetup": "pnpm/action-setup@v3 o v4"
+    },
+    "pipeline": [
+      "pnpm lint",
+      "pnpm test",
+      "pnpm build"
+    ]
+  }
+}
