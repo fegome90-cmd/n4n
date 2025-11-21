@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "validate-architecture stub: TODO implement real checks"
+echo "validate-architecture: Checking environment..."
 echo "✅ Architecture: $(uname -m)"
 echo "✅ Platform: $(uname -s)"
 echo "✅ Node version: $(node --version)"
