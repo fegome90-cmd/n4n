@@ -4,6 +4,7 @@
 - Clean Architecture: `apps/` (UI) depende de `packages/` (motor). Motor expone interfaces; capas clínicas viven fuera del repo.
 - Clean Code: funciones pequeñas, nombres explícitos, evitar estados globales; preferir composición sobre herencia.
 - Dependencias: adaptadores delgados; nada de SDKs clínicos/IA dentro del motor.
+- Separación de flujos: ejecutores no modifican `dev-docs/task.md` salvo para marcar tareas como Hechas tras validación explícita.
 
 ## Calidad y toolchain
 - Lint: `pnpm lint` (ESLint con @typescript-eslint, react-hooks). Fix antes de PR.
@@ -17,6 +18,7 @@
 - Instalación: `pnpm install` (Node >=20, pnpm >=9).
 - Dev app: `cd apps/n4n-web && pnpm dev` (Vite).
 - Scoping: usar `--filter` de pnpm/Turbo para limitar builds/tests por paquete.
+- Versiones esperadas: Node 20.x LTS, pnpm 9.x, TS 5.6.x, Vitest 2.x.
 - Branches sugeridas: `feature/TASK-###-slug`. Commits siempre atómicos.
 - Revisiones: PR con descripción breve, tareas vinculadas, pruebas ejecutadas; adjuntar captura/GIF para cambios de UI.
 

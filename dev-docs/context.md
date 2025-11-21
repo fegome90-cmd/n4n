@@ -25,7 +25,7 @@ Se considera v1 completado cuando:
 - Command Palette (`cmdk`) con 5–10 comandos base.
 - `SnippetProvider` stub + `CompletionProvider` stub integrados.
 - Storage local in-memory para `NoteDrafts` funcionando.
-- Tests cubren modos, comandos y storage (objetivo ~50%+ coverage en estas áreas).
+- Tests cubren modos, comandos y storage (objetivo ≥80% coverage global).
 
 ## Stack esencial
 - TypeScript + React 18 + Vite 6 + Tailwind 3 + CodeMirror 6 + cmdk.
