@@ -120,7 +120,7 @@ create_adr() {
     fi
 
     # Convert title to filename format
-    filename_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/-/g' | tr -s ' '-' | sed 's/^-//; s/-$//')
+    filename_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/-/g' | tr -s ' ' '-' | sed 's/^-//; s/-$//')
     filename="ADR-$id-$filename_title.md"
     filepath="$ADR_DIR/$filename"
 
@@ -129,14 +129,17 @@ create_adr() {
 
     # Create ADR from template
     if [ -f "$TEMPLATE_FILE" ]; then
+        # Pre-compute dynamic values to avoid nested quoting issues
+        current_date=$(date +%Y-%m-%d)
+        author_name=$(git config user.name 2>/dev/null || echo 'Author')
+
         # Extract template part between YAML markers
         sed -n '/```yaml/,/```/p' "$TEMPLATE_FILE" | \
         sed '1d;$d' | \
         sed "s/ADR-XXX/ADR-$id/g" | \
         sed "s/Título Descriptivo y Conciso de la Decisión Arquitectónica/$title/g" | \
-        sed "s/\"proposed\"/\"proposed\"/g" | \
-        sed "s/\"\$date\"/\"$(date +%Y-%m-%d)\"/g" | \
-        sed "s/\"Nombre del Autor\"/\"$(git config user.name 2>/dev/null || echo 'Author')\"/g" > "$filepath"
+        sed "s/\"\$date\"/\"$current_date\"/g" | \
+        sed "s/\"Nombre del Autor\"/\"$author_name\"/g" > "$filepath"
 
         # Add markdown sections
         echo "" >> "$filepath"
