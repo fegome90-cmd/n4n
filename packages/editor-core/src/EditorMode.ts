@@ -16,14 +16,19 @@ export enum EditorMode {
 }
 
 /**
- * Type guard to check if a value is a valid EditorMode
+ * Determines whether a value is a valid EditorMode.
+ *
+ * @param value - Value to test
+ * @returns `true` if `value` is a valid EditorMode, `false` otherwise.
  */
 export function isEditorMode(value: unknown): value is EditorMode {
   return Object.values(EditorMode).includes(value as EditorMode);
 }
 
 /**
- * Get default mode for new editor instances
+ * Provide the default editor mode for new editor instances.
+ *
+ * @returns The default EditorMode, `EditorMode.INSERT`.
  */
 export function getDefaultEditorMode(): EditorMode {
   return EditorMode.INSERT;

@@ -20,7 +20,11 @@ export interface EditorState {
 }
 
 /**
- * Create a new EditorState with default values
+ * Create a new editor state with the specified document content and mode.
+ *
+ * @param doc - The initial document content; defaults to an empty string.
+ * @param mode - The initial editor mode; defaults to `EditorMode.INSERT`.
+ * @returns A new `EditorState` containing `doc`, `mode`, and a `timestamp` set to the current time.
  */
 export function createEditorState(
   doc: string = "",
@@ -34,7 +38,15 @@ export function createEditorState(
 }
 
 /**
- * Create new EditorState by updating document content
+ * Return a new EditorState with updated document content and an advanced timestamp.
+ *
+ * The returned state has its `doc` replaced by `doc` and its `timestamp` set to the current time,
+ * or to the previous timestamp plus one if the previous timestamp is already >= current time,
+ * ensuring the new timestamp is strictly greater than the original.
+ *
+ * @param state - The existing EditorState to base the update on
+ * @param doc - The new document content
+ * @returns A new EditorState with `doc` set to `doc` and a strictly newer `timestamp`
  */
 export function withDocument(state: EditorState, doc: string): EditorState {
   const now = Date.now();
@@ -49,7 +61,11 @@ export function withDocument(state: EditorState, doc: string): EditorState {
 }
 
 /**
- * Create new EditorState by changing mode
+ * Create a new EditorState with the given mode and an updated, monotonically increasing timestamp.
+ *
+ * @param state - The existing editor state to base the update on
+ * @param mode - The new editor mode to set on the returned state
+ * @returns A new EditorState with `mode` replaced and `timestamp` set to `Date.now()` or incremented so it is greater than the previous timestamp
  */
 export function withMode(state: EditorState, mode: EditorMode): EditorState {
   const now = Date.now();
@@ -64,7 +80,10 @@ export function withMode(state: EditorState, mode: EditorMode): EditorState {
 }
 
 /**
- * Type guard to check if a value is a valid EditorState
+ * Determine whether a value conforms to the EditorState shape.
+ *
+ * @param value - The value to test
+ * @returns `true` if `value` has a valid `mode`, `doc`, and optional numeric `timestamp`; `false` otherwise.
  */
 export function isEditorState(value: unknown): value is EditorState {
   if (!value || typeof value !== "object") return false;

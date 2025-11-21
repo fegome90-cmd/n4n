@@ -15,7 +15,7 @@ ADR_DIR="dev-docs/ADR"
 TEMPLATE_FILE="$ADR_DIR/ADR_TEMPLATE_AND_GUIDE.md"
 DECISION_MATRIX="$ADR_DIR/ADR_DECISION_MATRIX.md"
 
-# Function to display help
+# help displays usage instructions, available commands, and examples for the ADR Helper CLI.
 help() {
     echo -e "${BLUE}ADR Helper - Kit Fundador v2.0${NC}"
     echo ""
@@ -37,7 +37,7 @@ help() {
     echo "  $0 validate ADR-015*.md  # Validate ADR format"
 }
 
-# Function to list all ADRs
+# list_adrs lists all ADR markdown files in $ADR_DIR, prints each ADR's ID and a human-readable title, and shows the total count. Exits with status 1 if the ADR directory is missing.
 list_adrs() {
     echo -e "${GREEN}All Architecture Decision Records:${NC}"
     echo ""
@@ -60,7 +60,7 @@ list_adrs() {
     echo -e "${BLUE}Total: $(find "$ADR_DIR" -name "ADR-*.md" -type f | wc -l | tr -d ' ') ADRs${NC}"
 }
 
-# Function to search ADRs
+# search_adrs searches ADR files for the given search term and prints matching filenames followed by matching lines with two-line context.
 search_adrs() {
     local term="$1"
     if [ -z "$term" ]; then
@@ -83,7 +83,7 @@ search_adrs() {
     done
 }
 
-# Function to get next ADR ID
+# next_id outputs the next ADR numeric identifier as a zero-padded three-digit string (e.g., 001, 002). It emits "001" when the ADR directory does not exist or when no existing ADR files are found.
 next_id() {
     if [ ! -d "$ADR_DIR" ]; then
         echo "001"
@@ -119,7 +119,7 @@ create_adr() {
     fi
 
     # Convert title to filename format
-    filename_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/-/g' | tr -s ' '-' | sed 's/^-//; s/-$//')
+    filename_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/-/g' | tr -s ' ' '-' | sed 's/^-//; s/-$//')
     filename="ADR-$id-$filename_title.md"
     filepath="$ADR_DIR/$filename"
 
@@ -128,14 +128,17 @@ create_adr() {
 
     # Create ADR from template
     if [ -f "$TEMPLATE_FILE" ]; then
+        # Pre-compute dynamic values to avoid nested quoting issues
+        current_date=$(date +%Y-%m-%d)
+        author_name=$(git config user.name 2>/dev/null || echo 'Author')
+
         # Extract template part between YAML markers
         sed -n '/```yaml/,/```/p' "$TEMPLATE_FILE" | \
         sed '1d;$d' | \
         sed "s/ADR-XXX/ADR-$id/g" | \
         sed "s/Título Descriptivo y Conciso de la Decisión Arquitectónica/$title/g" | \
-        sed "s/\"proposed\"/\"proposed\"/g" | \
-        sed "s/\"\$date\"/\"$(date +%Y-%m-%d)\"/g" | \
-        sed "s/\"Nombre del Autor\"/\"$(git config user.name 2>/dev/null || echo 'Author')\"/g" > "$filepath"
+        sed "s/\"\$date\"/\"$current_date\"/g" | \
+        sed "s/\"Nombre del Autor\"/\"$author_name\"/g" > "$filepath"
 
         # Add markdown sections
         echo "" >> "$filepath"

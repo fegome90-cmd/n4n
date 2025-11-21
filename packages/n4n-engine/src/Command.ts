@@ -72,7 +72,9 @@ export interface Command {
 }
 
 /**
- * Type guard to check if a value is a valid Command
+ * Determines whether a value satisfies the `Command` interface at runtime.
+ *
+ * @returns `true` if the value conforms to the `Command` shape, `false` otherwise.
  */
 export function isCommand(value: unknown): value is Command {
   if (!value || typeof value !== 'object') return false;
