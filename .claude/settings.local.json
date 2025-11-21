@@ -8,7 +8,8 @@
       "Bash(chmod +x .husky/pre-commit)",
       "Bash(dev-docs/task.md)",
       "Bash(test.ts)",
-      "Bash(nvm use 20)"
+      "Bash(nvm use 20)",
+      "Bash(.eslintignore)"
     ],
     "deny": [],
     "ask": []

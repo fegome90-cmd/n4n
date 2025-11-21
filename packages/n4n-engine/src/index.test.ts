@@ -2,11 +2,14 @@
  * @n4n/engine test suite
  */
 
+/**
+ * @n4n/engine test suite
+ */
 import { describe, it, expect } from "vitest";
+import pkg from "../package.json";
 
 describe("@n4n/engine", () => {
   it("should export package metadata", () => {
-    const pkg = require("../package.json");
     expect(pkg.name).toBe("@n4n/engine");
     expect(pkg.version).toBe("1.0.0");
   });

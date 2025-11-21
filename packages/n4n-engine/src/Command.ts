@@ -77,7 +77,7 @@ export interface Command {
 export function isCommand(value: unknown): value is Command {
   if (!value || typeof value !== 'object') return false;
 
-  const cmd = value as any;
+  const cmd = value as Record<string, unknown>;
 
   return (
     typeof cmd.id === 'string' &&
