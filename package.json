@@ -8,6 +8,7 @@
     "dev": "pnpm -r --parallel dev",
     "test": "pnpm -r test",
     "test:watch": "pnpm -r test:watch",
+    "test:coverage": "pnpm -r test -- --coverage.enabled=true",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
     "type-check": "pnpm -r type-check",
