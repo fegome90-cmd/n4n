@@ -1,28 +1,43 @@
 {
   "name": "@n4n/engine",
   "version": "1.0.0",
-  "description": "N4N Engine: Command system, providers, and storage",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "description": "Command system and providers for N4N Engine",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest",
-    "test:watch": "vitest --watch"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
     "typescript": "^5.6.0",
     "vitest": "^2.0.0"
-  }
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0",
+    "@n4n/editor-core": "^1.0.0"
+  },
+  "keywords": [
+    "commands",
+    "registry",
+    "providers",
+    "snippets",
+    "completion"
+  ],
+  "author": "N4N Engine Team",
+  "license": "MIT"
 }
