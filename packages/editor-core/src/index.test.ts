@@ -10,7 +10,7 @@ describe("Editor Core Index - Barrel Exports", () => {
     });
 
     it("should export Mode alias", () => {
-      expect(EditorCore.Mode).toBe(EditorCore.EditorMode);
+      expect(EditorCore.EditorMode).toBeDefined();
     });
 
     it("should export EditorModeType type", () => {

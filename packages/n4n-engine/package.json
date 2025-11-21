@@ -27,10 +27,6 @@
     "typescript": "^5.6.0",
     "vitest": "^2.0.0"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0",
-    "@n4n/editor-core": "^1.0.0"
-  },
   "keywords": [
     "commands",
     "registry",

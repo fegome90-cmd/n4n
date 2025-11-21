@@ -1,4 +1,10 @@
-import { EditorMode, EditorState } from '@n4n/editor-core';
+// Editor types - temporary definition until proper import is established
+export type EditorMode = 'INSERT' | 'COMMAND';
+export interface EditorState {
+  readonly mode: EditorMode;
+  readonly doc: string;
+  readonly timestamp?: number;
+}
 
 /**
  * Command Context - Domain Interface
