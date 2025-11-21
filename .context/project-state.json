@@ -1,132 +1,38 @@
 {
-  "version": "2.0.0",
-  "last_updated": "2025-11-21T10:20:00Z",
-  "project_metadata": {
-    "name": "neovim-for-nurses-engine",
-    "domain": "editor-motor-nursing-records",
-    "stage": "foundation",
-    "tech_stack_hash": "typescript-react-vite-codemirror-tailwind"
-  },
-  "current_state": {
-    "active_bounded_contexts": [
-      {
-        "name": "Editor Motor",
-        "description": "Motor técnico del editor web con modos, comandos y providers",
-        "status": "foundation",
-        "artifacts": [
-          "dev-docs/domain/ubiquitous-language.md",
-          "dev-docs/context.md"
-        ]
-      },
-      {
-        "name": "Command System",
-        "description": "Sistema de comandos extensible con command palette",
-        "status": "planned",
-        "artifacts": [
-          "dev-docs/task.md#TASK-005"
-        ]
-      },
-      {
-        "name": "Provider Interfaces",
-        "description": "Interfaces para SnippetProvider y CompletionProvider",
-        "status": "planned",
-        "artifacts": [
-          "dev-docs/context.md#interfaces"
-        ]
-      }
-    ],
-    "implemented_aggregates": [
-      {
-        "name": "EditorCore.EditorState",
-        "status": "in_progress",
-        "code": "packages/editor-core/src/types/EditorState.ts",
-        "tests": [],
-        "completion_date": null
-      },
-      {
-        "name": "EditorCore.EditorMode",
-        "status": "in_progress",
-        "code": "packages/editor-core/src/types/EditorMode.ts",
-        "tests": [],
-        "completion_date": null
-      }
-    ],
-    "pending_migrations": [],
-    "active_feature_flags": {},
-    "technical_debt_items": [
-      {
-        "id": "TD-MONO-001",
-        "summary": "Configuración de pnpm workspace y TypeScript path mapping",
-        "status": "in_progress",
-        "remediation_plan": "dev-docs/task.md#TASK-001",
-        "tasks": ["TASK-001"],
-        "notes": "Estructura de monorepo creada, pendiente configuración completa de workspace y path mapping."
-      },
-      {
-        "id": "TD-ARCH-001",
-        "summary": "Definición de interfaces del motor (Command, CommandContext, providers)",
-        "status": "planned",
-        "remediation_plan": "dev-docs/task.md#TASK-005",
-        "tasks": ["TASK-005"],
-        "notes": "Interfaces fundamentales del motor pendientes de definición e implementación."
-      }
+  "projectName": "n4n-engine",
+  "lastUpdated": "2025-11-21T11:10:00-03:00",
+  "phase": "Foundation",
+  "architecture": {
+    "type": "Monorepo",
+    "packageManager": "pnpm",
+    "workspaces": [
+      "apps/*",
+      "packages/*"
     ]
   },
-  "ai_context": {
-    "last_session_summary": "N4N Engine refactorizado desde configuración Neovim a motor web. Proyecto transformado usando kit fundador profesional con herramientas Clean Architecture + DDD + TDD. Monorepo configurado con React + Vite + TypeScript + CodeMirror 6. Estructura de paquetes: apps/n4n-web, packages/editor-core, packages/n4n-engine. Documentación actualizada para contexto del motor, no dominio clínico. TASK-001 completado, TASK-002 en progreso.",
-    "next_recommended_tasks": [
-      "TASK-002",
-      "TASK-003",
-      "TASK-004",
-      "TASK-005"
-    ],
-    "areas_needing_attention": [
-      "Completar tipos base del editor (EditorMode, EditorState)",
-      "Implementar EditorShell component con CodeMirror 6",
-      "Integrar command palette con cmdk",
-      "Definir interfaces Command y CommandContext",
-      "Configurar testing framework para monorepo"
-    ],
-    "recent_decisions": [
-      {
-        "id": "DEC-2025-11-21-TRANSFORMATION",
-        "summary": "Transformación completa del proyecto de configuración Neovim a motor web usando kit fundador profesional. Mantiene herramientas Clean Architecture + DDD + TDD, elimina dependencias específicas del dominio web.",
-        "references": [
-          "dev-docs/context.md",
-          "dev-docs/task.md",
-          "config/tech-stack.json"
-        ]
-      },
-      {
-        "id": "DEC-2025-11-21-MONOREPO",
-        "summary": "Adopción de estructura monorepo con pnpm workspaces para N4N Engine. Apps en apps/ y packages en packages/ para modularidad y extensibilidad.",
-        "references": [
-          "dev-docs/task.md#TASK-001",
-          "config/tech-stack.json"
-        ]
-      },
-      {
-        "id": "DEC-2025-11-21-TECH-STACK",
-        "summary": "Selección de stack React + Vite + TypeScript + CodeMirror 6 + cmdk para N4N Engine. Prioriza rendimiento, extensibilidad y developer experience.",
-        "references": [
-          "config/tech-stack.json",
-          "dev-docs/task.md#ADR-002"
-        ]
-      },
-      {
-        "id": "DEC-2025-11-21-MOTOR-VS-CLINICAL",
-        "summary": "Separación clara entre motor técnico (este repositorio) y dominio clínico (futuros repositorios). Motor expone interfaces para providers clínicos.",
-        "references": [
-          "dev-docs/context.md",
-          "dev-docs/domain/ubiquitous-language.md"
-        ]
-      }
-    ]
+  "components": {
+    "frontend": {
+      "name": "n4n-web",
+      "path": "apps/n4n-web",
+      "status": "missing",
+      "tech": ["React", "Vite", "TailwindCSS"]
+    },
+    "editor-core": {
+      "name": "editor-core",
+      "path": "packages/editor-core",
+      "status": "empty",
+      "tech": ["TypeScript", "CodeMirror 6"]
+    },
+    "engine": {
+      "name": "n4n-engine",
+      "path": "packages/n4n-engine",
+      "status": "empty",
+      "tech": ["TypeScript"]
+    }
   },
-  "metrics": {
-    "test_coverage": 0,
-    "cyclomatic_complexity_avg": 0,
-    "dependency_count": 0,
-    "last_build_time_ms": 0
+  "qualityGates": {
+    "linting": "pending",
+    "testing": "pending",
+    "build": "pending"
   }
 }
