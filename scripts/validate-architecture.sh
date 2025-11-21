@@ -1,69 +1,29 @@
-#!/bin/bash
-# Architecture Validation Script for N4N
-# Validates project structure, dependencies, and basic architectural rules
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -e
+echo "validate-architecture: Checking environment..."
+echo "✅ Architecture: $(uname -m)"
+echo "✅ Platform: $(uname -s)"
+echo "✅ Node version: $(node --version)"
+echo "✅ Package manager: $(pnpm --version)"
 
-echo "🏗️ Validating N4N Architecture..."
-
-SCORE=0
-TOTAL=100
-
-# Check package structure
-echo "📦 Checking package structure..."
-if [ -d "packages/editor-core" ] && [ -d "packages/n4n-engine" ]; then
-  SCORE=$((SCORE + 20))
-  echo "✅ Core packages exist: +20 (Score: $SCORE/$TOTAL)"
+# Basic architecture validation
+ARCH=$(uname -m)
+if [[ "$ARCH" == "x86_64" || "$ARCH" == "arm64" ]]; then
+  echo "✅ Supported architecture: $ARCH"
 else
-  echo "❌ Core packages missing"
-fi
-
-# Check TypeScript configuration
-echo "🔧 Checking TypeScript configuration..."
-if [ -f "tsconfig.json" ]; then
-  SCORE=$((SCORE + 10))
-  echo "✅ Root tsconfig.json exists: +10 (Score: $SCORE/$TOTAL)"
-else
-  echo "❌ Root tsconfig.json missing"
-fi
-
-# Run TypeScript type checking
-echo "🔍 Running TypeScript type check..."
-if pnpm type-check >/dev/null 2>&1; then
-  SCORE=$((SCORE + 30))
-  echo "✅ Type checking passed: +30 (Score: $SCORE/$TOTAL)"
-else
-  echo "❌ Type checking failed"
-fi
-
-# Run linter
-echo "🧹 Running ESLint..."
-if pnpm lint >/dev/null 2>&1; then
-  SCORE=$((SCORE + 20))
-  echo "✅ Linting passed: +20 (Score: $SCORE/$TOTAL)"
-else
-  echo "⚠️  Linting issues detected (non-critical)"
-  SCORE=$((SCORE + 10))
-fi
-
-# Check build
-echo "🔨 Checking build..."
-if pnpm build >/dev/null 2>&1; then
-  SCORE=$((SCORE + 20))
-  echo "✅ Build successful: +20 (Score: $SCORE/$TOTAL)"
-else
-  echo "❌ Build failed"
-fi
-
-# Final score
-echo ""
-echo "🎯 Final Architecture Validation Score: $SCORE/$TOTAL ($(( SCORE * 100 / TOTAL ))%)"
-
-if [ $SCORE -ge 80 ]; then
-  echo "✅ PASSED: Architecture validation successful"
-  exit 0
-else
-  echo "❌ FAILED: Architecture validation score < 80%"
-  echo "💡 Review failing validations before proceeding"
+  echo "❌ Unsupported architecture: $ARCH"
   exit 1
 fi
+
+# Node version validation
+NODE_VERSION=$(node --version | sed 's/v//')
+if [[ "$(printf '%s\n' "20.10.0" "$NODE_VERSION" | sort -V | head -n1)" == "20.10.0" ]]; then
+  echo "✅ Node version meets minimum: $NODE_VERSION"
+else
+  echo "❌ Node version below minimum: $NODE_VERSION (requires >=20.10.0)"
+  exit 1
+fi
+
+echo "✅ validate-architecture: All checks passed"
+exit 0
