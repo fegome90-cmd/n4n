@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./scripts/validate-architecture.sh)",
+      "Bash(chmod +x /Users/felipe/Developer/Neovim_for_nurses/.husky/pre-commit)",
+      "Bash(yamllint .github/workflows/ci.yml)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
