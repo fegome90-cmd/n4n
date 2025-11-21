@@ -5,7 +5,10 @@
       "Bash(yamllint .github/workflows/ci.yml)",
       "Bash(.husky/pre-commit)",
       "Bash(chmod +x .husky/pre-commit)",
-      "Bash(nvm use 20)"
+      "Bash(dev-docs/task.md)",
+      "Bash(test.ts)",
+      "Bash(nvm use 20)",
+      "Bash(.eslintignore)"
     ],
     "deny": [],
     "ask": []

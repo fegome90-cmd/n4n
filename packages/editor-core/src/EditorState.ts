@@ -93,7 +93,7 @@ export function isEditorState(value: unknown): value is EditorState {
   // Check required properties exist and have correct types
   return (
     typeof state.mode === "string" &&
-    Object.values(EditorMode).includes(state.mode) &&
+    Object.values(EditorMode).includes(state.mode as EditorMode) &&
     typeof state.doc === "string" &&
     (state.timestamp === undefined || typeof state.timestamp === "number")
   );

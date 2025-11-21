@@ -2,6 +2,9 @@
  * @n4n/engine test suite
  */
 
+/**
+ * @n4n/engine test suite
+ */
 import { describe, it, expect } from "vitest";
 import pkg from "../package.json";
 
