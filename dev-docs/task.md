@@ -6,18 +6,6 @@ Reglas: cada task debe ser ejecutable en 1 commit. Si el commit necesita un “y
 - Ninguna. Toma la siguiente de "Por hacer".
 
 ## Por hacer (micro-tasks)
-### [TASK-002] Definir `EditorMode`
-- Criterios: crear tipo/enum con `INSERT`, `COMMAND` en `packages/editor-core`; exportado desde su índice; test mínimo que valida los valores.
-
-### [TASK-003] Definir `EditorState`
-- Criterios: interfaz con `mode: EditorMode` y `doc: string`; exportada desde el índice de `editor-core`; test que asegura shape básico.
-
-### [TASK-004] Barril de exports `editor-core`
-- Criterios: `packages/editor-core/src/index.ts` reexporta `EditorMode`, `EditorState`; build/type-check del paquete pasa.
-
-### [TASK-005] Interfaces de comandos (`n4n-engine`)
-- Criterios: definir `Command` (`id`, `label`, `handler(ctx)`), `CommandContext` (estado/mutadores mínimos) en `packages/n4n-engine`; exportadas desde índice; test de tipado/shape.
-
 ### [TASK-006] Registro simple de comandos
 - Criterios: función/objeto para registrar/listar comandos en `n4n-engine`; manejo de ids duplicados (rechazo o reemplazo definido); tests cubren alta/listado/ejecución.
 
@@ -72,3 +60,15 @@ Reglas: cada task debe ser ejecutable en 1 commit. Si el commit necesita un “y
 ## Hechas
 ### [TASK-001] Esqueleto de monorepo
 - Resultado: existen `apps/n4n-web`, `packages/editor-core`, `packages/n4n-engine`; workspace pnpm configurado; `pnpm install` funciona.
+
+### [TASK-002] Definir `EditorMode`
+- Resultado: enum `EditorMode` con `INSERT`, `COMMAND` en `packages/editor-core/src/EditorMode.ts`; exportado desde índice; tests completos (37/37 globales con editor-core) pasando en Node 20.10.0.
+
+### [TASK-003] Definir `EditorState`
+- Resultado: interfaz `EditorState` con helpers `createEditorState/withDocument/withMode` en `packages/editor-core/src/EditorState.ts`; tests completos pasando en Node 20.10.0.
+
+### [TASK-004] Barril de exports `editor-core`
+- Resultado: `packages/editor-core/src/index.ts` reexporta `EditorMode`, `EditorState` y aliases; build/type-check del paquete pasa; exports ESM/CJS apuntan a `dist/index.mjs` / `dist/index.js`.
+
+### [TASK-005] Interfaces de comandos (`n4n-engine`)
+- Resultado: `packages/n4n-engine/src/Command.ts` define `Command` y `CommandContext` base; type-check del paquete pasa; build CJS/ESM generado correctamente.
