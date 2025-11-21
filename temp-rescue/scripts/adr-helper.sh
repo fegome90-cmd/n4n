@@ -15,7 +15,7 @@ ADR_DIR="dev-docs/ADR"
 TEMPLATE_FILE="$ADR_DIR/ADR_TEMPLATE_AND_GUIDE.md"
 DECISION_MATRIX="$ADR_DIR/ADR_DECISION_MATRIX.md"
 
-# Function to display help
+# help displays usage information, available commands, and example invocations for the ADR Helper script.
 help() {
     echo -e "${BLUE}ADR Helper - Kit Fundador v2.0${NC}"
     echo ""
@@ -37,7 +37,7 @@ help() {
     echo "  $0 validate ADR-015*.md  # Validate ADR format"
 }
 
-# Function to list all ADRs
+# list_adrs lists ADR files under ADR_DIR, printing each file's ID and human-friendly title and the total count; exits with status 1 if ADR_DIR is not found.
 list_adrs() {
     echo -e "${GREEN}All Architecture Decision Records:${NC}"
     echo ""
@@ -60,7 +60,7 @@ list_adrs() {
     echo -e "${BLUE}Total: $(find "$ADR_DIR" -name "ADR-*.md" -type f | wc -l | tr -d ' ') ADRs${NC}"
 }
 
-# Function to search ADRs
+# search_adrs searches ADR markdown files for a given term and prints matching filenames along with matching lines and two lines of context.
 search_adrs() {
     local term="$1"
     if [ -z "$term" ]; then
@@ -83,7 +83,8 @@ search_adrs() {
     done
 }
 
-# Function to get next ADR ID
+# next_id prints the next ADR identifier formatted as three digits (e.g., 001).
+# If the ADR directory does not exist or contains no ADR files, it prints "001"; otherwise it finds the highest existing ADR-<NNN> number and prints that number plus one, zero-padded to width 3.
 next_id() {
     if [ ! -d "$ADR_DIR" ]; then
         echo "001"
