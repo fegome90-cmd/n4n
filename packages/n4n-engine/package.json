@@ -21,7 +21,6 @@
     "test:watch": "vitest --watch"
   },
   "devDependencies": {
-    "@n4n/tsconfig": "workspace:*",
     "tsup": "^8.0.0",
     "typescript": "^5.6.0",
     "vitest": "^2.0.0"
